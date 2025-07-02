@@ -14,8 +14,8 @@ const REPORTES_API_URL = `${BASE_URL}/api/reportes`;
 const ENCUESTAS_API_URL = `${BASE_URL}/api/encuestas`;
 
 // Función para obtener todos los egresados
-export const getEgresados = (estado) => {
-  return axios.get(`${API_URL}?estado=${estado}`);
+export const getEgresados = (params) => {
+  return axios.get(API_URL + "?" + params.toString());
 };
 
 // Función para agregar un nuevo egresado
