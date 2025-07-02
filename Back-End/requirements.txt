@@ -1,0 +1,11 @@
+Flask==2.3.3
+Flask-SQLAlchemy==3.0.5
+Flask-CORS==4.0.0
+marshmallow==3.20.1
+requests==2.31.0
+cx-Oracle==8.3.0
+schedule==1.2.2
+pandas==2.3.0
+matplotlib==3.10.3
+seaborn==0.13.2
+gunicorn==21.2.0

@@ -1,0 +1,89 @@
+/* Contenedor del formulario */
+.form-container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Título */
+h2 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+/* Estilos para los grupos de campos */
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Estilos para los campos de entrada */
+input,
+select {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  margin-top: 8px;
+  outline: none;
+}
+
+input:focus,
+select:focus {
+  border-color: #4CAF50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+/* Estilo mejorado para el botón de agregar */
+.submit-btn {
+  display: inline-flex;          /* Flex para alinear icono y texto */
+  align-items: center;           /* Centrar verticalmente */
+  justify-content: center;       /* Centrar horizontalmente */
+  gap: 8px;                      /* Espacio entre icono y texto */
+  
+  width: auto;
+  min-width: 800px;
+  padding: 6px 100px;             /* Ajusta un poco más padding horizontal */
+  font-size: 14px;
+  background: linear-gradient(45deg, #4CAF50, #2e7d32);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(46, 125, 50, 0.5);
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  line-height: 1.2;
+  height: 50px;
+  margin-top: 38px;  /* espacio para verlo más abajo */
+}
+
+.submit-btn:hover {
+  background: linear-gradient(45deg, #388e3c, #1b5e20);
+  box-shadow: 0 4px 12px rgba(27, 94, 32, 0.7);
+  transform: translateY(-1px);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 6px rgba(27, 94, 32, 0.6);
+}
+
+.submit-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.5);
+}
+

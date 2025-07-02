@@ -1,0 +1,298 @@
+/* Estilo de los botones con iconos */
+button {
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button svg {
+  margin-right: 8px; /* Espacio entre el icono y el texto */
+  font-size: 18px; /* Tamaño de los iconos */
+}
+
+/* Estilo de los botones de eliminar, editar y restaurar */
+button.delete {
+  background-color: #f44336;
+  color: white;
+}
+
+button.delete:hover {
+  background-color: #d32f2f;
+}
+
+button.edit {
+  background-color: #4CAF50;
+  color: white;
+}
+
+button.edit:hover {
+  background-color: #388e3c;
+}
+
+button.restore {
+  background-color: #007BFF;
+  color: white;
+}
+
+button.restore:hover {
+  background-color: #0056b3;
+}
+
+/* Botones de acción en la tabla */
+.acciones {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  font-size: 20px;
+  cursor: pointer;
+  background: #e0e0e0;
+  transition: background 0.2s;
+}
+
+.btn.historial {
+  background: #6c63ff;
+  color: white;
+}
+
+.btn.delete {
+  background: #dc3545;
+  color: white;
+}
+
+.btn.edit {
+  background: #2196f3;
+  color: white;
+}
+
+.btn.restore {
+  background: #17a2b8;
+  color: white;
+}
+
+.btn:hover {
+  filter: brightness(0.9);
+}
+
+/* Estilo para el estado activo */
+th, td {
+  padding: 14px;
+  text-align: left;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+td svg {
+  margin-right: 8px; /* Espacio entre el icono y el texto */
+}
+
+td {
+  display: flex;
+  align-items: center;
+}
+
+/* PAGINACIÓN CENTRADA Y MODERNA */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin: 24px 0 0 0;
+  width: 100%;
+}
+
+.pagination button {
+  margin: 0 2px;
+  padding: 8px 16px;
+  border: 1px solid #1976d2;
+  background-color: #fff;
+  color: #1976d2;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.pagination button.active,
+.pagination button:focus {
+  background-color: #1976d2;
+  color: #fff;
+  outline: none;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #f0f0f0;
+  color: #888;
+  border: 1px solid #ccc;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  text-align: left;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+th {
+  background: #1976d2;
+  color: #fff;
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background: #f5f5f5;
+}
+
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-radius: 4px;
+  padding: 24px 32px 16px 32px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+.header-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #111;
+  letter-spacing: 1px;
+}
+
+.header-breadcrumb {
+  font-size: 1.2rem;
+  color: #b0b0b0;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.breadcrumb-separator {
+  margin: 0 8px;
+  color: #b0b0b0;
+}
+
+/* Centrar y armonizar filtros y tabla */
+.filtros-tabla-wrapper {
+  max-width: 1200px;
+  margin: 0 auto 24px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-filters {
+  background: #fff;
+  padding: 18px 24px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.filters-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 18px;
+  width: 100%;
+}
+
+.filter-group,
+.per-page-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 170px;
+}
+
+.clear-filters-btn {
+  align-self: flex-end;
+  margin-bottom: 2px;
+}
+
+@media (max-width: 900px) {
+  .filters-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .clear-filters-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.egresado-list {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Estilos para los filtros de búsqueda */
+.filter-group label {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.filter-input,
+.filter-select {
+  padding: 10px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+  background: white;
+}
+
+.filter-input:focus,
+.filter-select:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+}
+
+.filter-input::placeholder {
+  color: #999;
+}
+
+/* Selector de registros por página */
+.per-page-selector label {
+  font-weight: 600;
+  color: #333;
+}
+.per-page-selector select {
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}

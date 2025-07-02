@@ -1,0 +1,219 @@
+.empresa-list {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 32px 24px;
+  margin: 32px auto;
+  max-width: 1200px;
+}
+
+.empresa-list h2 {
+  margin-bottom: 18px;
+  font-size: 2rem;
+  color: #1976d2;
+  font-weight: 700;
+}
+
+.empresa-list table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  margin-top: 16px;
+}
+
+.empresa-list th, .empresa-list td {
+  border: 1px solid #e0e0e0;
+  padding: 12px 10px;
+  text-align: left;
+  font-size: 15px;
+}
+
+.empresa-list th {
+  background: #1976d2;
+  color: #fff;
+  font-weight: 600;
+}
+
+.empresa-list tr:nth-child(even) {
+  background: #f7fafd;
+}
+
+.empresa-list .acciones {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.empresa-list .icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  background: #e0e0e0;
+  transition: background 0.2s;
+}
+.empresa-list .icon-btn.edit {
+  background: #2196f3;
+  color: #fff;
+}
+.empresa-list .icon-btn.delete {
+  background: #dc3545;
+  color: #fff;
+}
+.empresa-list .icon-btn.restore {
+  background: #17a2b8;
+  color: #fff;
+}
+.empresa-list .icon-btn:hover {
+  filter: brightness(0.9);
+}
+
+.empresa-list .pagination {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 24px 0 0 0;
+}
+.empresa-list .pagination button {
+  background: #fff;
+  color: #1976d2;
+  border: 1.5px solid #1976d2;
+  font-weight: 600;
+  padding: 7px 14px;
+}
+.empresa-list .pagination button.active,
+.empresa-list .pagination button:focus {
+  background: #1976d2;
+  color: #fff;
+  outline: none;
+}
+.empresa-list .pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #f0f0f0;
+  color: #888;
+  border: 1px solid #ccc;
+}
+
+/* --- EmpresaForm --- */
+.empresa-form {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 32px 24px;
+  margin: 32px auto;
+  max-width: 480px;
+}
+.empresa-form h2 {
+  margin-bottom: 18px;
+  font-size: 2rem;
+  color: #1976d2;
+  font-weight: 700;
+  text-align: center;
+}
+.empresa-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.empresa-form label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+.empresa-form input {
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1.5px solid #d0d7de;
+  font-size: 15px;
+  background: #f8fafc;
+  transition: border-color 0.2s;
+}
+.empresa-form input:focus {
+  border-color: #1976d2;
+  outline: none;
+}
+.empresa-form button[type='submit'] {
+  background: #1976d2;
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 0;
+  margin-top: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.empresa-form button[type='submit']:hover {
+  background: #1251a3;
+}
+.empresa-form button[type='button'] {
+  background: #fff;
+  color: #1976d2;
+  border: 1.5px solid #1976d2;
+  border-radius: 6px;
+  padding: 10px 0;
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.empresa-form button[type='button']:hover {
+  background: #1976d2;
+  color: #fff;
+}
+
+.barra-superior-empresa {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  gap: 16px;
+}
+.filtros-empresa-btns {
+  display: flex;
+  gap: 10px;
+}
+.filtros-empresa-btns button {
+  background: #e0e0e0;
+  color: #1976d2;
+  font-weight: 700;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.filtros-empresa-btns button.activo,
+.filtros-empresa-btns button:disabled {
+  background: #1976d2;
+  color: #fff;
+  cursor: default;
+}
+.btn-agregar-empresa {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #28a745;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 15px;
+  border: none;
+  transition: background 0.2s;
+  text-decoration: none;
+}
+.btn-agregar-empresa:hover {
+  background: #218838;
+  color: #fff;
+} 

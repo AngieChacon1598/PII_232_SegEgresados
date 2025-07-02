@@ -1,0 +1,34 @@
+# Node.js
+node_modules/
+front-end/node_modules/
+front-end/.pnp
+front-end/.pnp.js
+
+# Python
+*.pyc
+__pycache__/
+.venv/
+Back-End/SegEgresados/
+
+# React build
+front-end/build/
+front-end/dist/
+front-end/coverage/
+
+# Archivos de usuario y subidas
+Back-End/app/uploads/
+
+# Archivos de entorno y sistema
+.env
+.DS_Store
+Thumbs.db
+front-end/.env.local
+front-end/.env.development.local
+front-end/.env.test.local
+front-end/.env.production.local
+
+# Otros
+*.log
+front-end/npm-debug.log*
+front-end/yarn-debug.log*
+front-end/yarn-error.log* 

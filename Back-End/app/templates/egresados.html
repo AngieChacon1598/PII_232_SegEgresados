@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Egresados</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        select, button {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .pagination {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination li {
+            margin: 0 5px;
+        }
+
+        .pagination a {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .pagination a:hover {
+            background-color: #45a049;
+        }
+
+        .pagination .disabled a {
+            background-color: #e0e0e0;
+            cursor: not-allowed;
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Lista de Egresados</h1>
+</header>
+
+<div class="container">
+    <!-- Filtro por estado -->
+    <form method="get" action="/egresados/html">
+        <label for="estado">Filtrar por estado:</label>
+        <select name="estado" id="estado">
+            <option value="">Todos</option>
+            <option value="A" {% if request.args.get('estado') == 'A' %}selected{% endif %}>Activos</option>
+            <option value="I" {% if request.args.get('estado') == 'I' %}selected{% endif %}>Inactivos</option>
+        </select>
+        <button type="submit">Filtrar</button>
+    </form>
+
+    <!-- Mostrar la tabla de egresados -->
+    <h2>Lista de Egresados</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>DNI</th>
+                <th>Correo</th>
+                <th>Teléfono</th>
+                <th>Carrera</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for e in egresados %}
+            <tr>
+                <td>{{ e.codigo }}</td>
+                <td>{{ e.nombre }}</td>
+                <td>{{ e.apellidos }}</td>
+                <td>{{ e.dni }}</td>
+                <td>{{ e.correo }}</td>
+                <td>{{ e.telefono }}</td>
+                <td>{{ e.carrera }}</td>
+                <td>{{ 'Activo' if e.estado == 'A' else 'Inactivo' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Paginación -->
+    <ul class="pagination">
+        {% if prev_url %}
+            <li><a href="{{ url_for('listar_egresados_html', page=prev_url) }}">Anterior</a></li>
+        {% else %}
+            <li class="disabled"><a href="#">Anterior</a></li>
+        {% endif %}
+        {% if next_url %}
+            <li><a href="{{ url_for('listar_egresados_html', page=next_url) }}">Siguiente</a></li>
+        {% else %}
+            <li class="disabled"><a href="#">Siguiente</a></li>
+        {% endif %}
+    </ul>
+
+</div>
+
+</body>
+</html>
