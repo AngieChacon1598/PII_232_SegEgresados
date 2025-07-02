@@ -4,7 +4,7 @@ import axios from 'axios';
 const isDevelopment = process.env.NODE_ENV === 'development';
 const BASE_URL = isDevelopment 
   ? 'http://localhost:5001' 
-  : 'pii-232-segegresados-api.onrender.com';
+  : 'https://pii-232-segegresados-api.onrender.com';
 
 // URLs base para todas las APIs
 const API_URL = `${BASE_URL}/egresados`;
