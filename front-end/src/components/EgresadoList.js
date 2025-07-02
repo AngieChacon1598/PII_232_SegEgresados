@@ -36,6 +36,7 @@ const EgresadoList = ({
       });
       
       const response = await getEgresados(params);
+      console.log('Respuesta de la API:', response.data);
       setEgresados(Array.isArray(response.data.egresados) ? response.data.egresados : []);
       setTotalPages(response.data.pages || 1);
     } catch (error) {
@@ -58,7 +59,7 @@ const EgresadoList = ({
 
   useEffect(() => {
     setPage(1); // Resetear a la primera página al cambiar filtros o perPage
-  }, [filter, filtros, perPage]);
+  }, [filter, JSON.stringify(filtros), perPage]);
 
   useEffect(() => {
     fetchEgresados();
