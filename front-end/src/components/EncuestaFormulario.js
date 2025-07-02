@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { enviarEncuesta } from '../services/api';
 
 const formulariosPorTipo = {
   'satisfaccion': {
@@ -76,13 +77,7 @@ const EncuestaFormulario = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:5001/api/encuestas', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      const result = await response.json();
+      const result = await enviarEncuesta(payload);
 
       if (result.result === 'success') {
         setMensaje('Gracias por enviar la encuesta');

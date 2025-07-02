@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { getEstadisticas } from '../services/api';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   PieChart, Pie, Cell, LineChart, Line, AreaChart, Area, ComposedChart
@@ -21,10 +21,10 @@ const Estadisticas = () => {
     const fetchData = async () => {
       try {
         const [egresadosRes, detallesRes, certRes, empresasRes] = await Promise.all([
-          axios.get('http://localhost:5001/egresados?per_page=1000'),
-          axios.get('http://localhost:5001/detalle-egresados?per_page=1000'),
-          axios.get('http://localhost:5001/certificaciones'),
-          axios.get('http://localhost:5001/empresas')
+          getEstadisticas('egresados?per_page=1000'),
+          getEstadisticas('detalle-egresados?per_page=1000'),
+          getEstadisticas('certificaciones'),
+          getEstadisticas('empresas')
         ]);
 
         setEgresados(egresadosRes.data.egresados || []);

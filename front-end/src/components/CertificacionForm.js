@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { updateCertificacion, addCertificacion } from '../services/api';
 import './CertificacionForm.css';
 
 function CertificacionForm({ egresado, certificacion, onSuccess, onCancel }) {
@@ -66,9 +66,9 @@ function CertificacionForm({ egresado, certificacion, onSuccess, onCancel }) {
     if (form.archivo) data.append('archivo', form.archivo);
     try {
       if (certificacion) {
-        await axios.put(`http://localhost:5001/certificaciones/${certificacion.id_certificacion}`, data);
+        await updateCertificacion(certificacion.id_certificacion, data);
       } else {
-        await axios.post('http://localhost:5001/certificaciones', data);
+        await addCertificacion(data);
       }
       onSuccess();
     } catch (err) {

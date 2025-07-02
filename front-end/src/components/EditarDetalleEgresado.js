@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { getEgresados, getDetalleEgresados, updateDetalleEgresado } from '../services/api';
 import { FaEdit, FaArrowLeft } from 'react-icons/fa';
 import './EditarDetalleEgresado.css';
 
@@ -31,7 +31,7 @@ function EditarDetalleEgresado() {
 
   const fetchEgresados = async () => {
     try {
-      const response = await axios.get('http://localhost:5001/egresados?estado=A');
+      const response = await getEgresados();
       setEgresados(response.data);
     } catch (error) {
       console.error('Error al obtener los egresados:', error);
@@ -41,7 +41,7 @@ function EditarDetalleEgresado() {
 
   const fetchDetalle = async () => {
     try {
-      const response = await axios.get(`http://localhost:5001/detalle-egresados/${idDetalle}`);
+      const response = await getDetalleEgresados(idDetalle);
       const detalle = response.data;
       
       setFormData({
@@ -112,7 +112,7 @@ function EditarDetalleEgresado() {
         sueldo_actual: formData.sueldo_actual ? parseFloat(formData.sueldo_actual) : null
       };
 
-      await axios.put(`http://localhost:5001/detalle-egresados/${idDetalle}`, detalleData);
+      await updateDetalleEgresado(idDetalle, detalleData);
       setMessage('Detalle de egresado actualizado correctamente!');
       
       // Redirigir después de 2 segundos

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { getEmpresas, getEgresados, addDetalleEgresado } from '../services/api';
 import { FaUserPlus, FaArrowLeft } from 'react-icons/fa';
 import './AgregarDetalleEgresado.css';
 
@@ -28,13 +28,12 @@ function AgregarDetalleEgresado() {
 
   useEffect(() => {
     fetchEgresados();
-    axios.get('http://localhost:5001/empresas?estado=A')
-      .then(res => setEmpresas(res.data.empresas || []));
+    getEmpresas().then(res => setEmpresas(res.data.empresas || []));
   }, []);
 
   const fetchEgresados = async () => {
     try {
-      const response = await axios.get('http://localhost:5001/egresados?estado=A');
+      const response = await getEgresados();
       setEgresados(Array.isArray(response.data.egresados) ? response.data.egresados : []);
     } catch (error) {
       console.error('Error al obtener los egresados:', error);
@@ -108,7 +107,7 @@ function AgregarDetalleEgresado() {
         estado: formData.estado
       };
 
-      await axios.post('http://localhost:5001/detalle-egresados', payload);
+      await addDetalleEgresado(payload);
       setMessage('Detalle de egresado agregado exitosamente!');
       
       // Limpiar formulario

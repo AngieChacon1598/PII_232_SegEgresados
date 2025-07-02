@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { addEgresado } from '../services/api';
 import './AgregarEgresado.css'; // Agregar archivo CSS para los estilos
 import { FaUserPlus } from 'react-icons/fa';
 
@@ -49,7 +49,7 @@ function AgregarEgresado({ fetchEgresados }) {
     const egresado = { codigo, nombre, apellidos, dni, correo, telefono, carrera, estado: 'A' };
 
     try {
-      const response = await axios.post('http://localhost:5001/egresados', egresado);
+      const response = await addEgresado(egresado);
       
       // Verificar si la respuesta es exitosa (código 201 o 200)
       if (response.status === 201 || response.status === 200) {

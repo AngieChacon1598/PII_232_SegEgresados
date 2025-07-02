@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FaEdit, FaTrashAlt, FaUndo, FaPlus } from 'react-icons/fa';
 import './Empresa.css';
+import { getEmpresas, deleteEmpresa, restoreEmpresa } from '../services/api';
 
 function EmpresaList() {
   const [empresas, setEmpresas] = useState([]);
@@ -22,7 +22,7 @@ function EmpresaList() {
         ...(busqueda.nombre && { nombre: busqueda.nombre }),
         ...(busqueda.ruc && { ruc: busqueda.ruc })
       });
-      const response = await axios.get(`http://localhost:5001/empresas?${params}`);
+      const response = await getEmpresas(params);
       setEmpresas(response.data.empresas || []);
       setTotalPages(response.data.pages || 1);
     } catch (error) {
@@ -33,27 +33,6 @@ function EmpresaList() {
   useEffect(() => {
     fetchEmpresas();
   }, [filter, page, perPage, busqueda]);
-
-  const deleteEmpresa = async (id) => {
-    if (!window.confirm('¿Eliminar esta empresa?')) return;
-    try {
-      await axios.delete(`http://localhost:5001/empresas/${id}`);
-      fetchEmpresas();
-      setMessage('Empresa eliminada correctamente');
-    } catch {
-      setMessage('Error al eliminar empresa');
-    }
-  };
-
-  const restoreEmpresa = async (id) => {
-    try {
-      await axios.put(`http://localhost:5001/empresas/restaurar/${id}`);
-      fetchEmpresas();
-      setMessage('Empresa restaurada correctamente');
-    } catch {
-      setMessage('Error al restaurar empresa');
-    }
-  };
 
   const handleBusqueda = e => {
     setBusqueda({ ...busqueda, [e.target.name]: e.target.value });

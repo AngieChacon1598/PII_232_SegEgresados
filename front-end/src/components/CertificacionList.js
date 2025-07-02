@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { getCertificaciones, deleteCertificacion, downloadCertificacion } from '../services/api';
 import { FaDownload, FaTrash, FaEdit, FaPlus } from 'react-icons/fa';
 
 function CertificacionList({ codigo_egresado, onEdit, onAdd, refresh }) {
@@ -10,7 +10,7 @@ function CertificacionList({ codigo_egresado, onEdit, onAdd, refresh }) {
   const fetchCertificaciones = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`http://localhost:5001/certificaciones?codigo_egresado=${codigo_egresado}`);
+      const res = await getCertificaciones(codigo_egresado);
       setCertificaciones(res.data.certificaciones || []);
     } catch (err) {
       setError('Error al cargar certificaciones');
@@ -27,7 +27,7 @@ function CertificacionList({ codigo_egresado, onEdit, onAdd, refresh }) {
   const handleDelete = async (id) => {
     if (!window.confirm('¿Eliminar esta certificación?')) return;
     try {
-      await axios.delete(`http://localhost:5001/certificaciones/${id}`);
+      await deleteCertificacion(id);
       fetchCertificaciones();
     } catch {
       setError('No se pudo eliminar');
@@ -35,7 +35,7 @@ function CertificacionList({ codigo_egresado, onEdit, onAdd, refresh }) {
   };
 
   const handleDownload = (id) => {
-    window.open(`http://localhost:5001/certificaciones/${id}/archivo`, '_blank');
+    downloadCertificacion(id);
   };
 
   return (

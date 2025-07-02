@@ -1,9 +1,9 @@
 // src/components/EgresadoList.js
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaTrashAlt, FaEdit, FaUndo, FaUsers, FaCircle, FaEye, FaSearch, FaTimes } from 'react-icons/fa';
 import './EgresadoList.css';
+import { getEgresados, getCarreras, deleteEgresado, restoreEgresado } from '../services/api';
 
 const EgresadoList = ({
   filter,
@@ -35,7 +35,7 @@ const EgresadoList = ({
         ...(filtros.carrera && { carrera: filtros.carrera })
       });
       
-      const response = await axios.get(`http://localhost:5001/egresados?${params}`);
+      const response = await getEgresados(params);
       setEgresados(Array.isArray(response.data.egresados) ? response.data.egresados : []);
       setTotalPages(response.data.pages || 1);
     } catch (error) {
@@ -49,7 +49,7 @@ const EgresadoList = ({
 
   const fetchCarreras = async () => {
     try {
-      const response = await axios.get('http://localhost:5001/carreras');
+      const response = await getCarreras();
       setCarreras(response.data.carreras || []);
     } catch (error) {
       console.error('Error al obtener carreras:', error);
@@ -84,7 +84,7 @@ const EgresadoList = ({
   const deleteEgresado = async (codigo) => {
     if (!window.confirm('¿Estás seguro de eliminar este egresado?')) return;
     try {
-      await axios.delete(`http://localhost:5001/egresados/${codigo}`);
+      await deleteEgresado(codigo);
       fetchEgresados();
       setMessage('Egresado actualizado correctamente!');
     } catch (error) {
@@ -94,7 +94,7 @@ const EgresadoList = ({
 
   const restoreEgresado = async (codigo) => {
     try {
-      await axios.put(`http://localhost:5001/egresados/restaurar/${codigo}`);
+      await restoreEgresado(codigo);
       fetchEgresados();
       setMessage('Egresado restaurado correctamente!');
     } catch (error) {

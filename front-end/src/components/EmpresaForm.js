@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { getEmpresa, updateEmpresa, addEmpresa } from '../services/api';
 import { useNavigate, useParams } from 'react-router-dom';
 import './Empresa.css';
 
@@ -18,7 +18,7 @@ function EmpresaForm() {
 
   useEffect(() => {
     if (isEdit) {
-      axios.get(`http://localhost:5001/empresas/${id}`)
+      getEmpresa(id)
         .then(res => setForm(res.data))
         .catch(() => setError('No se pudo cargar la empresa'));
     }
@@ -33,9 +33,9 @@ function EmpresaForm() {
     setError('');
     try {
       if (isEdit) {
-        await axios.put(`http://localhost:5001/empresas/${id}`, form);
+        await updateEmpresa(id, form);
       } else {
-        await axios.post('http://localhost:5001/empresas', form);
+        await addEmpresa(form);
       }
       navigate('/empresas');
     } catch (err) {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { getReporteEgresadosPorAnio } from '../services/api';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LabelList } from 'recharts';
 
 const ReporteEgresadosPorAnio = () => {
@@ -10,7 +10,7 @@ const ReporteEgresadosPorAnio = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/api/reportes/egresados-por-anio');
+        const response = await getReporteEgresadosPorAnio();
         setData(response.data);
       } catch (err) {
         setError('Error al cargar los datos');

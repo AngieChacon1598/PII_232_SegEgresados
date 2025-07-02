@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { getDetalleEgresados, getEgresados, deleteDetalleEgresado, restoreDetalleEgresado } from '../services/api';
 import { FaTrashAlt, FaEdit, FaUndo, FaUsers, FaCircle, FaPlus } from 'react-icons/fa';
 import './DetalleEgresadoList.css';
 
@@ -22,7 +22,7 @@ function DetalleEgresadoList() {
         per_page: perPage,
         ...(codigoFilter && { codigo_egresado: codigoFilter })
       });
-      const response = await axios.get(`http://localhost:5001/detalle-egresados?${params}`);
+      const response = await getDetalleEgresados(params);
       setDetalles(Array.isArray(response.data.detalles) ? response.data.detalles : []);
       setTotalPages(response.data.pages || 1);
     } catch (error) {
@@ -35,7 +35,7 @@ function DetalleEgresadoList() {
 
   const fetchEgresados = async () => {
     try {
-      const response = await axios.get('http://localhost:5001/egresados?estado=A');
+      const response = await getEgresados('A');
       setEgresados(Array.isArray(response.data.egresados) ? response.data.egresados : []);
     } catch (error) {
       console.error('Error al obtener los egresados:', error);
@@ -46,7 +46,7 @@ function DetalleEgresadoList() {
   const deleteDetalle = async (idDetalle) => {
     if (!window.confirm('¿Estás seguro de eliminar este detalle de egresado?')) return;
     try {
-      await axios.delete(`http://localhost:5001/detalle-egresados/${idDetalle}`);
+      await deleteDetalleEgresado(idDetalle);
       fetchDetalles();
       setMessage('Detalle de egresado eliminado correctamente!');
     } catch (error) {
@@ -56,7 +56,7 @@ function DetalleEgresadoList() {
 
   const restoreDetalle = async (idDetalle) => {
     try {
-      await axios.put(`http://localhost:5001/detalle-egresados/restaurar/${idDetalle}`);
+      await restoreDetalleEgresado(idDetalle);
       fetchDetalles();
       setMessage('Detalle de egresado restaurado correctamente!');
     } catch (error) {

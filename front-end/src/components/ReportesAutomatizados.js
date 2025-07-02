@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { getConfiguracionReportes, enviarReporteManual, getVistaPreviaReporte, updateConfiguracionReportes } from '../services/api';
 import { FaEnvelope, FaCog, FaEye, FaPaperPlane, FaClock, FaCalendarAlt } from 'react-icons/fa';
 import './ReportesAutomatizados.css';
 
@@ -18,7 +18,7 @@ const ReportesAutomatizados = () => {
 
   const cargarConfiguracion = async () => {
     try {
-      const response = await axios.get('http://localhost:5001/api/reportes/configuracion');
+      const response = await getConfiguracionReportes();
       setConfiguracion(response.data);
     } catch (error) {
       console.error('Error cargando configuración:', error);
@@ -33,10 +33,7 @@ const ReportesAutomatizados = () => {
     try {
       const emails = emailsAdicionales.split(',').map(email => email.trim()).filter(email => email);
       
-      const response = await axios.post('http://localhost:5001/api/reportes/enviar-manual', {
-        tipo: tipoReporte,
-        emails: emails
-      });
+      const response = await enviarReporteManual(tipoReporte, emails);
       
       setMessage(response.data.message);
       setEmailsAdicionales('');
@@ -51,7 +48,7 @@ const ReportesAutomatizados = () => {
     setLoading(true);
     
     try {
-      const response = await axios.get(`http://localhost:5001/api/reportes/vista-previa?tipo=${tipoReporte}`);
+      const response = await getVistaPreviaReporte(tipoReporte);
       setVistaPrevia(response.data);
     } catch (error) {
       setMessage(error.response?.data?.message || 'Error generando vista previa');
@@ -62,7 +59,7 @@ const ReportesAutomatizados = () => {
 
   const actualizarConfiguracion = async (nuevaConfig) => {
     try {
-      await axios.put('http://localhost:5001/api/reportes/configuracion', nuevaConfig);
+      await updateConfiguracionReportes(nuevaConfig);
       setMessage('Configuración actualizada exitosamente');
       setShowConfig(false);
       cargarConfiguracion();

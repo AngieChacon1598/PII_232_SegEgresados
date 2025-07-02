@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import axios from 'axios';
+import { getDetalleEgresados, getEgresados } from '../services/api';
 import { FaArrowLeft } from 'react-icons/fa';
 import CertificacionList from './CertificacionList';
 import CertificacionForm from './CertificacionForm';
@@ -18,9 +18,9 @@ function HistorialLaboral() {
     const fetchHistorial = async () => {
       setLoading(true);
       try {
-        const detallesRes = await axios.get(`http://localhost:5001/detalle-egresados?codigo_egresado=${codigo}`);
+        const detallesRes = await getDetalleEgresados(codigo);
         setDetalles(Array.isArray(detallesRes.data.detalles) ? detallesRes.data.detalles : []);
-        const egresadoRes = await axios.get(`http://localhost:5001/egresados/${codigo}`);
+        const egresadoRes = await getEgresados(codigo);
         setEgresado(egresadoRes.data);
       } catch (err) {
         setDetalles([]);

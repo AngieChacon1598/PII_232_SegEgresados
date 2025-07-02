@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { getReporteEgresadosPorEstado } from '../services/api';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, Label } from 'recharts';
 
 const COLORS = ['#00C49F', '#FF8042'];
@@ -13,7 +13,7 @@ const ReporteEgresadosPorEstado = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/api/reportes/egresados-por-estado');
+        const response = await getReporteEgresadosPorEstado();
         // Mapear los estados a etiquetas legibles
         setData(response.data.map(d => ({ ...d, estado: ESTADO_LABELS[d.estado] || d.estado })));
       } catch (err) {

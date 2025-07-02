@@ -20,10 +20,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "build:css": "tailwindcss build dist/styles.css -o dist/output.css",
-    "watch:css": "tailwindcss build dist/styles.css -o dist/output.css --watch",
-    "postinstall": "npm run build:css",
-    "prestart": "npm run build:css",
+    "build:css": "tailwindcss build src/index.css -o src/tailwind.css",
+    "watch:css": "tailwindcss build src/index.css -o src/tailwind.css --watch",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

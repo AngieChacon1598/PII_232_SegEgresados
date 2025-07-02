@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { getEgresados, registrarNuevoEmpleo } from '../services/api';
 
 const initialForm = {
   codigo_egresado: '',
@@ -22,7 +22,7 @@ const RegistrarNuevoEmpleo = () => {
   useEffect(() => {
     const fetchEgresados = async () => {
       try {
-        const res = await axios.get('http://localhost:5001/egresados?estado=A');
+        const res = await getEgresados('A');
         setEgresados(Array.isArray(res.data) ? res.data : res.data.egresados || []);
       } catch (err) {
         setMessage('Error al cargar egresados');
@@ -43,7 +43,7 @@ const RegistrarNuevoEmpleo = () => {
       const payload = { ...form };
       delete payload.codigo_egresado;
       payload.sueldo_actual = parseFloat(payload.sueldo_actual);
-      const res = await axios.post(`http://localhost:5001/api/egresados/${form.codigo_egresado}/nuevo-empleo`, payload);
+      const res = await registrarNuevoEmpleo(form.codigo_egresado, payload);
       setMessage(res.data.message || 'Nuevo empleo registrado exitosamente');
       setForm(initialForm);
     } catch (err) {

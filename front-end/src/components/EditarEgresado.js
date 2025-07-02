@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { getEgresados, updateEgresado } from '../services/api';
 import './EditarEgresado.css';  // Asegúrate de tener el CSS para estilos
 
 function EditarEgresado({ setMessage, fetchEgresados }) {
@@ -21,7 +21,7 @@ function EditarEgresado({ setMessage, fetchEgresados }) {
   useEffect(() => {
     const fetchEgresado = async () => {
       try {
-        const response = await axios.get(`http://localhost:5001/egresados/${codigo}`);
+        const response = await getEgresados(codigo);
         setEgresado(response.data);
       } catch (error) {
         setMessage('No se pudo cargar la información del egresado.');
@@ -49,7 +49,7 @@ function EditarEgresado({ setMessage, fetchEgresados }) {
 
     setLoading(true);
     try {
-      await axios.put(`http://localhost:5001/egresados/${codigo}`, egresado);
+      await updateEgresado(codigo, egresado);
       setMessage('Egresado actualizado correctamente!');
       fetchEgresados();
       navigate('/');
