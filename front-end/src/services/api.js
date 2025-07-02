@@ -2,7 +2,9 @@ import axios from 'axios';
 
 // Configuración para desarrollo y producción
 const isDevelopment = process.env.NODE_ENV === 'development';
-const BASE_URL = isDevelopment ? 'http://localhost:5001' : '';
+const BASE_URL = isDevelopment 
+  ? 'http://localhost:5001' 
+  : 'pii-232-segegresados-api.onrender.com';
 
 // URLs base para todas las APIs
 const API_URL = `${BASE_URL}/egresados`;
@@ -25,6 +27,7 @@ export const addEgresado = (egresado) => {
 
 // Función para eliminar un egresado
 export const deleteEgresado = (codigo) => {
+  console.log("Llamando deleteEgresado a:", `${API_URL}/${codigo}`);
   return axios.delete(`${API_URL}/${codigo}`);
 };
 
