@@ -157,4 +157,6 @@ Para problemas específicos de despliegue:
 
 ---
 
-**Nota**: Este backend incluye automáticamente el frontend React compilado. No necesitas desplegar el frontend por separado. 
+**Nota**: Este backend incluye automáticamente el frontend React compilado. No necesitas desplegar el frontend por separado.
+
+# Forzar redeploy para que Render detecte runtime.txt 
