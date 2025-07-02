@@ -1064,6 +1064,19 @@ def agregar_certificacion():
     fecha_obtencion = data.get('fecha_obtencion')
     estado = data.get('estado', 'A')
     archivo_nombre = None
+    # Validaciones explícitas
+    if not codigo_egresado:
+        return jsonify({'message': 'El campo codigo_egresado es obligatorio'}), 400
+    if not nombre:
+        return jsonify({'message': 'El campo nombre es obligatorio'}), 400
+    if not institucion:
+        return jsonify({'message': 'El campo institucion es obligatorio'}), 400
+    if not fecha_obtencion:
+        return jsonify({'message': 'El campo fecha_obtencion es obligatorio'}), 400
+    try:
+        fecha_obtencion_date = datetime.strptime(fecha_obtencion, '%Y-%m-%d').date()
+    except Exception:
+        return jsonify({'message': 'El campo fecha_obtencion debe tener formato YYYY-MM-DD'}), 400
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         archivo_nombre = f"{codigo_egresado}_{int(datetime.now().timestamp())}_{filename}"
@@ -1072,7 +1085,7 @@ def agregar_certificacion():
         codigo_egresado=codigo_egresado,
         nombre=nombre,
         institucion=institucion,
-        fecha_obtencion=datetime.strptime(fecha_obtencion, '%Y-%m-%d').date() if fecha_obtencion else None,
+        fecha_obtencion=fecha_obtencion_date,
         archivo=archivo_nombre,
         estado=estado
     )
