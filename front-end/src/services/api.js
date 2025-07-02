@@ -46,17 +46,16 @@ export const updateEgresado = (codigo, egresado) => {
 // ========================================
 
 // Función para obtener todos los detalles de egresados
-export const getDetalleEgresados = (estado, codigoEgresado) => {
+export const getDetalleEgresados = (estado, codigoEgresado, page = 1, per_page = 10) => {
   let url = DETALLE_API_URL;
   const params = new URLSearchParams();
-  
   if (estado) params.append('estado', estado);
   if (codigoEgresado) params.append('codigo_egresado', codigoEgresado);
-  
+  if (page) params.append('page', page);
+  if (per_page) params.append('per_page', per_page);
   if (params.toString()) {
     url += `?${params.toString()}`;
   }
-  
   return axios.get(url);
 };
 

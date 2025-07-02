@@ -16,7 +16,7 @@ function DetalleEgresadoList() {
 
   const fetchDetalles = async () => {
     try {
-      const response = await getDetalleEgresados(filter, codigoFilter);
+      const response = await getDetalleEgresados(filter, codigoFilter, page, perPage);
       setDetalles(Array.isArray(response.data.detalles) ? response.data.detalles : []);
       setTotalPages(response.data.pages || 1);
     } catch (error) {
