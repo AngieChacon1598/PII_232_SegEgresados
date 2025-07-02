@@ -32,6 +32,10 @@ GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzI_811QN5p0WNsmcjp
 
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'pool_recycle': 280,
+    'pool_pre_ping': True
+}
 db = SQLAlchemy(app)
 
 # Configuración de Email
