@@ -30,7 +30,7 @@ export const deleteEgresado = (codigo) => {
   console.log("Llamando deleteEgresado a:", `${API_URL}/${codigo}`);
   return axios.delete(`${API_URL}/${codigo}`);
 };
-
+  
 // Función para restaurar un egresado
 export const restoreEgresado = (codigo) => {
   return axios.put(`${API_URL}/${codigo}/restaurar`);
