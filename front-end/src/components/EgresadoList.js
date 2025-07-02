@@ -1,7 +1,7 @@
 // src/components/EgresadoList.js
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { FaTrashAlt, FaEdit, FaUndo, FaUsers, FaCircle, FaEye, FaSearch, FaTimes } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import { FaTrashAlt, FaEdit, FaUndo, FaCircle, FaEye, FaTimes } from 'react-icons/fa';
 import './EgresadoList.css';
 import { getEgresados, getCarreras, deleteEgresado, restoreEgresado } from '../services/api';
 
@@ -27,14 +27,14 @@ const EgresadoList = ({
     setLoading(true);
     try {
       const params = new URLSearchParams({
-        estado: filter,
         page,
         per_page: perPage,
+        ...(filter ? { estado: filter } : {}),
         ...(filtros.apellidos && { apellidos: filtros.apellidos }),
         ...(filtros.dni && { dni: filtros.dni }),
         ...(filtros.carrera && { carrera: filtros.carrera })
       });
-      
+
       const response = await getEgresados(params);
       console.log('Respuesta de la API:', response.data);
       setEgresados(Array.isArray(response.data.egresados) ? response.data.egresados : []);
@@ -58,7 +58,7 @@ const EgresadoList = ({
   };
 
   useEffect(() => {
-    setPage(1); // Resetear a la primera página al cambiar filtros o perPage
+    setPage(1);
   }, [filter, JSON.stringify(filtros), perPage]);
 
   useEffect(() => {
@@ -82,7 +82,7 @@ const EgresadoList = ({
     });
   };
 
-  const deleteEgresado = async (codigo) => {
+  const handleDelete = async (codigo) => {
     if (!window.confirm('¿Estás seguro de eliminar este egresado?')) return;
     try {
       await deleteEgresado(codigo);
@@ -93,7 +93,7 @@ const EgresadoList = ({
     }
   };
 
-  const restoreEgresado = async (codigo) => {
+  const handleRestore = async (codigo) => {
     try {
       await restoreEgresado(codigo);
       fetchEgresados();
@@ -102,18 +102,6 @@ const EgresadoList = ({
       setMessage('Error al restaurar el egresado');
     }
   };
-
-  // Log detallado para depuración de propiedades objeto
-  if (Array.isArray(egresados)) {
-    egresados.forEach((egresado, i) => {
-      console.log('egresado', i, egresado);
-      Object.entries(egresado).forEach(([k, v]) => {
-        if (typeof v === 'object' && v !== null) {
-          console.log(`Propiedad ${k} es un objeto:`, v);
-        }
-      });
-    });
-  }
 
   return (
     <>
@@ -125,10 +113,13 @@ const EgresadoList = ({
       {message && <p className="message">{message}</p>}
 
       <div className="filter-buttons">
-        <button onClick={() => setFilter('A')} disabled={filter === 'A'}>
+        <button onClick={() => setFilter('')} className={filter === '' ? 'active' : ''}>
+          Mostrar Todos
+        </button>
+        <button onClick={() => setFilter('A')} className={filter === 'A' ? 'active' : ''}>
           Mostrar Activos
         </button>
-        <button onClick={() => setFilter('I')} disabled={filter === 'I'}>
+        <button onClick={() => setFilter('I')} className={filter === 'I' ? 'active' : ''}>
           Mostrar Inactivos
         </button>
       </div>
@@ -169,9 +160,7 @@ const EgresadoList = ({
               >
                 <option value="">Todas las carreras</option>
                 {carreras.map((carrera, index) => (
-                  <option key={index} value={carrera}>
-                    {carrera}
-                  </option>
+                  <option key={index} value={carrera}>{carrera}</option>
                 ))}
               </select>
             </div>
@@ -199,7 +188,7 @@ const EgresadoList = ({
 
         {loading ? (
           <p>Cargando egresados...</p>
-        ) : (Array.isArray(egresados) && egresados.length === 0) ? (
+        ) : (egresados.length === 0) ? (
           <p>No se encontraron egresados.</p>
         ) : (
           <div className="egresado-list">
@@ -211,7 +200,7 @@ const EgresadoList = ({
                   <th>Nombre</th>
                   <th>Apellidos</th>
                   <th>DNI</th>
-                  <th>Correo Electrónico</th>
+                  <th>Correo</th>
                   <th>Teléfono</th>
                   <th>Carrera</th>
                   <th>Estado</th>
@@ -221,62 +210,34 @@ const EgresadoList = ({
               <tbody>
                 {egresados.map((egresado) => (
                   <tr key={egresado.codigo}>
-                    <td>{typeof egresado.codigo === 'object' && egresado.codigo !== null ? '[objeto]' : egresado.codigo}</td>
-                    <td>{typeof egresado.nombre === 'object' && egresado.nombre !== null ? '[objeto]' : egresado.nombre}</td>
-                    <td>{typeof egresado.apellidos === 'object' && egresado.apellidos !== null ? '[objeto]' : egresado.apellidos}</td>
-                    <td>{typeof egresado.dni === 'object' && egresado.dni !== null ? '[objeto]' : egresado.dni}</td>
-                    <td>{typeof egresado.correo === 'object' && egresado.correo !== null ? '[objeto]' : egresado.correo}</td>
-                    <td>{typeof egresado.telefono === 'object' && egresado.telefono !== null ? '[objeto]' : egresado.telefono}</td>
-                    <td>{typeof egresado.carrera === 'object' && egresado.carrera !== null ? '[objeto]' : egresado.carrera}</td>
-                    <td style={{ display: 'flex', justifyContent: 'center', verticalAlign: 'middle', background: 'transparent'}}>
-                      {egresado.estado === 'A' ? (
-                        <FaCircle style={{ color: 'green', fontSize: '15px'}} title="Activo" />
-                      ) : (
-                        <FaCircle style={{ color: 'orange', fontSize: '15px'}} title="Inactivo" />
-                      )}
+                    <td>{egresado.codigo}</td>
+                    <td>{egresado.nombre}</td>
+                    <td>{egresado.apellidos}</td>
+                    <td>{egresado.dni}</td>
+                    <td>{egresado.correo}</td>
+                    <td>{egresado.telefono}</td>
+                    <td>{egresado.carrera}</td>
+                    <td style={{ textAlign: 'center' }}>
+                      <FaCircle
+                        style={{ color: egresado.estado === 'A' ? 'green' : 'orange', fontSize: '15px' }}
+                        title={egresado.estado === 'A' ? 'Activo' : 'Inactivo'}
+                      />
                     </td>
                     <td>
                       <div className="acciones">
-                        <Link
-                          to={`/historial/${egresado.codigo}`}
-                          className="btn historial"
-                          title="Ver historial laboral"
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            background: '#6c63ff',
-                            color: 'white',
-                            borderRadius: '8px',
-                            width: '36px',
-                            height: '36px',
-                            fontSize: '20px'
-                          }}
-                        >
+                        <Link to={`/historial/${egresado.codigo}`} className="btn historial" title="Ver historial laboral">
                           <FaEye />
                         </Link>
                         {egresado.estado === 'I' ? (
-                          <button
-                            className="btn restore"
-                            onClick={() => restoreEgresado(egresado.codigo)}
-                            title="Restaurar egresado"
-                          >
+                          <button className="btn restore" onClick={() => handleRestore(egresado.codigo)} title="Restaurar">
                             <FaUndo />
                           </button>
                         ) : (
                           <>
-                            <button
-                              className="btn delete"
-                              onClick={() => deleteEgresado(egresado.codigo)}
-                              title="Eliminar egresado"
-                            >
+                            <button className="btn delete" onClick={() => handleDelete(egresado.codigo)} title="Eliminar">
                               <FaTrashAlt />
                             </button>
-                            <Link
-                              to={`/editar/${egresado.codigo}`}
-                              className="btn edit"
-                              title="Editar egresado"
-                            >
+                            <Link to={`/editar/${egresado.codigo}`} className="btn edit" title="Editar">
                               <FaEdit />
                             </Link>
                           </>
@@ -287,7 +248,7 @@ const EgresadoList = ({
                 ))}
               </tbody>
             </table>
-            {/* Paginación */}
+
             <div className="pagination">
               <button onClick={() => setPage(page - 1)} disabled={page === 1}>Anterior</button>
               {Array.from({ length: totalPages }, (_, i) => (

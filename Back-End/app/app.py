@@ -465,9 +465,14 @@ def get_egresados():
     
     query = Egresado.query
     
-    # Aplicar filtros
+    # Limpiar y aplicar filtro por estado (opcional y corregido si viene mal formado)
     if estado:
-        query = query.filter_by(estado=estado)
+        # Si viene como "estado=A" o "estado=estado=A", lo limpiamos
+        if 'estado=' in estado:
+            estado = estado.split('estado=')[-1]
+        estado = estado.strip().upper()  # Limpiar espacios y asegurar mayúsculas
+        if estado in ['A', 'I']:  # Validar valores aceptados
+            query = query.filter_by(estado=estado)
     
     if apellidos:
         query = query.filter(Egresado.apellidos.ilike(f'%{apellidos}%'))
