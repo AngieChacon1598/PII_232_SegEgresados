@@ -33,7 +33,7 @@ export const deleteEgresado = (codigo) => {
 
 // Función para restaurar un egresado
 export const restoreEgresado = (codigo) => {
-  return axios.put(`${API_URL}/restaurar/${codigo}`);
+  return axios.put(`${API_URL}/${codigo}/restaurar`);
 };
 
 // Función para actualizar un egresado

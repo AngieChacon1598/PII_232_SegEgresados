@@ -620,7 +620,7 @@ def delete_egresado_logico(codigo):
     return jsonify({'message': 'Egresado eliminado lógicamente', 'egresado': egresado.to_dict()}), 200
 
 # Ruta para restaurar un egresado (PUT)
-@app.route('/egresados/restaurar/<string:codigo>', methods=['PUT'])
+@app.route('/egresados/<string:codigo>/restaurar', methods=['PUT'])
 def restaurar_egresado(codigo):
     egresado = Egresado.query.get(codigo)
     if not egresado:
