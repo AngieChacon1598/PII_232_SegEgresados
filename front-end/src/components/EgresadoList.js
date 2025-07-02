@@ -83,6 +83,7 @@ const EgresadoList = ({
   };
 
   const handleDelete = async (codigo) => {
+    console.log("Intentando eliminar egresado:", codigo);
     if (!window.confirm('¿Estás seguro de eliminar este egresado?')) return;
     try {
       await deleteEgresado(codigo);
@@ -90,6 +91,7 @@ const EgresadoList = ({
       setMessage('Egresado actualizado correctamente!');
     } catch (error) {
       setMessage('Error al eliminar el egresado');
+      console.error("Error al eliminar:", error);
     }
   };
 
