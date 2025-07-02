@@ -16,13 +16,7 @@ function DetalleEgresadoList() {
 
   const fetchDetalles = async () => {
     try {
-      const params = new URLSearchParams({
-        estado: filter,
-        page,
-        per_page: perPage,
-        ...(codigoFilter && { codigo_egresado: codigoFilter })
-      });
-      const response = await getDetalleEgresados(params);
+      const response = await getDetalleEgresados(filter, codigoFilter);
       setDetalles(Array.isArray(response.data.detalles) ? response.data.detalles : []);
       setTotalPages(response.data.pages || 1);
     } catch (error) {
