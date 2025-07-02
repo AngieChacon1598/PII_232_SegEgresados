@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, Response, send_file
+from flask import Flask, request, jsonify, render_template, Response, send_file, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from config import SQLALCHEMY_DATABASE_URI
@@ -25,7 +25,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Inicialización de la app Flask
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='/')
 CORS(app)
 
 GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzI_811QN5p0WNsmcjpYxzfvLmMQJL6ZrkKFqKNqye9MSJQ6hVYbOVvOYnf1FYof74B/exec'
@@ -1223,6 +1223,29 @@ def obtener_estadisticas_reportes():
         return jsonify({
             'message': f'Error obteniendo estadísticas: {str(e)}'
         }), 500
+
+# ========================================
+# RUTAS PARA SERVIR EL FRONT-END (REACT)
+# ========================================
+
+@app.route('/')
+def serve():
+    """Sirve la aplicación React"""
+    return send_from_directory(app.static_folder, 'index.html')
+
+@app.route('/<path:path>')
+def static_proxy(path):
+    """Sirve archivos estáticos de React"""
+    file_name = path.split('/')[-1]
+    if '.' in file_name:
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
+
+@app.errorhandler(404)
+def not_found(e):
+    """Maneja rutas no encontradas redirigiendo a React"""
+    return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5001)
