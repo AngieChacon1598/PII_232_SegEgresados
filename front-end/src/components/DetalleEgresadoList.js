@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getDetalleEgresados, getEgresados, deleteDetalleEgresado, restoreDetalleEgresado } from '../services/api';
+import {
+  getDetalleEgresados,
+  getEgresados,
+  deleteDetalleEgresado,
+  restoreDetalleEgresado
+} from '../services/api';
 import { FaTrashAlt, FaEdit, FaUndo, FaUsers, FaCircle, FaPlus } from 'react-icons/fa';
 import './DetalleEgresadoList.css';
 
@@ -16,6 +21,7 @@ function DetalleEgresadoList() {
 
   const fetchDetalles = async () => {
     try {
+      console.log('Llamando getDetalleEgresados con:', filter, codigoFilter, page, perPage);
       const response = await getDetalleEgresados(filter, codigoFilter, page, perPage);
       setDetalles(Array.isArray(response.data.detalles) ? response.data.detalles : []);
       setTotalPages(response.data.pages || 1);
@@ -29,7 +35,9 @@ function DetalleEgresadoList() {
 
   const fetchEgresados = async () => {
     try {
-      const response = await getEgresados('A');
+      const params = new URLSearchParams();
+      params.append('estado', 'A');
+      const response = await getEgresados(params);
       setEgresados(Array.isArray(response.data.egresados) ? response.data.egresados : []);
     } catch (error) {
       console.error('Error al obtener los egresados:', error);
@@ -71,8 +79,9 @@ function DetalleEgresadoList() {
     }).format(amount);
   };
 
+  // Resetear página al cambiar filtros
   useEffect(() => {
-    setPage(1); // Resetear a la primera página al cambiar filtros o perPage
+    setPage(1);
   }, [filter, codigoFilter, perPage]);
 
   useEffect(() => {
@@ -86,9 +95,6 @@ function DetalleEgresadoList() {
       return () => clearTimeout(timer);
     }
   }, [message]);
-
-  // Depuración: mostrar la estructura de los detalles en consola
-  console.log('detalles:', detalles);
 
   return (
     <>
@@ -183,11 +189,11 @@ function DetalleEgresadoList() {
                     <td>{formatDate(detalle.fecha_incorporacion)}</td>
                     <td>{detalle.area_trabajo || 'N/A'}</td>
                     <td>{formatCurrency(detalle.sueldo_actual)}</td>
-                    <td style={{ display: 'flex', justifyContent: 'center', verticalAlign: 'middle', background: 'transparent'}}>
+                    <td style={{ display: 'flex', justifyContent: 'center', background: 'transparent' }}>
                       {detalle.estado === 'A' ? (
-                        <FaCircle style={{ color: 'green', fontSize: '15px'}} title="Activo" />
+                        <FaCircle style={{ color: 'green', fontSize: '15px' }} title="Activo" />
                       ) : (
-                        <FaCircle style={{ color: 'orange', fontSize: '15px'}} title="Inactivo" />
+                        <FaCircle style={{ color: 'orange', fontSize: '15px' }} title="Inactivo" />
                       )}
                     </td>
                     <td>
@@ -224,6 +230,7 @@ function DetalleEgresadoList() {
                 ))}
               </tbody>
             </table>
+
             {/* Paginación */}
             <div className="pagination">
               <button onClick={() => setPage(page - 1)} disabled={page === 1}>Anterior</button>
@@ -245,4 +252,4 @@ function DetalleEgresadoList() {
   );
 }
 
-export default DetalleEgresadoList; 
+export default DetalleEgresadoList;
