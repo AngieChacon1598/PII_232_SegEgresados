@@ -105,6 +105,10 @@ const EgresadoList = ({
     }
   };
 
+  const obtenerCodigo = (codigo) => {
+    return typeof codigo === 'object' && codigo !== null ? codigo.value : codigo;
+  };
+
   return (
     <>
       <div className="header-bar">
@@ -211,8 +215,8 @@ const EgresadoList = ({
               </thead>
               <tbody>
                 {egresados.map((egresado) => (
-                  <tr key={egresado.codigo}>
-                    <td>{egresado.codigo}</td>
+                  <tr key={obtenerCodigo(egresado.codigo)}>
+                    <td>{obtenerCodigo(egresado.codigo)}</td>
                     <td>{egresado.nombre}</td>
                     <td>{egresado.apellidos}</td>
                     <td>{egresado.dni}</td>
@@ -227,19 +231,19 @@ const EgresadoList = ({
                     </td>
                     <td>
                       <div className="acciones">
-                        <Link to={`/historial/${egresado.codigo}`} className="btn historial" title="Ver historial laboral">
+                        <Link to={`/historial/${obtenerCodigo(egresado.codigo)}`} className="btn historial" title="Ver historial laboral">
                           <FaEye />
                         </Link>
                         {egresado.estado === 'I' ? (
-                          <button className="btn restore" onClick={() => handleRestore(egresado.codigo)} title="Restaurar">
+                          <button className="btn restore" onClick={() => handleRestore(obtenerCodigo(egresado.codigo))} title="Restaurar">
                             <FaUndo />
                           </button>
                         ) : (
                           <>
-                            <button className="btn delete" onClick={() => handleDelete(egresado.codigo)} title="Eliminar">
+                            <button className="btn delete" onClick={() => handleDelete(obtenerCodigo(egresado.codigo))} title="Eliminar">
                               <FaTrashAlt />
                             </button>
-                            <Link to={`/editar/${egresado.codigo}`} className="btn edit" title="Editar">
+                            <Link to={`/editar/${obtenerCodigo(egresado.codigo)}`} className="btn edit" title="Editar">
                               <FaEdit />
                             </Link>
                           </>
