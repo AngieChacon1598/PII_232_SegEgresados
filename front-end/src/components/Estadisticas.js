@@ -20,18 +20,11 @@ const Estadisticas = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [egresadosRes, detallesRes, certRes, empresasRes] = await Promise.all([
-          getEstadisticas('egresados?per_page=1000'),
-          getEstadisticas('detalle-egresados?per_page=1000'),
-          getEstadisticas('certificaciones'),
-          getEstadisticas('empresas')
-        ]);
-
+        const [egresadosRes, detallesRes, certRes, empresasRes] = await getEstadisticas();
         setEgresados(egresadosRes.data.egresados || []);
         setDetalles(detallesRes.data.detalles || []);
         setCertificaciones(certRes.data.certificaciones || []);
         setEmpresas(empresasRes.data.empresas || []);
-
         // Calcular estadísticas
         calcularEstadisticas(
           egresadosRes.data.egresados || [],
@@ -45,7 +38,6 @@ const Estadisticas = () => {
         setLoading(false);
       }
     };
-
     fetchData();
   }, []);
 

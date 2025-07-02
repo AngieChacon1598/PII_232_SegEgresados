@@ -38,6 +38,7 @@ function EmpresaForm() {
         await addEmpresa(form);
       }
       navigate('/empresas');
+      window.location.reload();
     } catch (err) {
       setError(err.response?.data?.message || 'Error al guardar');
     }

@@ -129,6 +129,7 @@ function AgregarDetalleEgresado() {
       // Redirigir después de 2 segundos
       setTimeout(() => {
         navigate('/detalles');
+        window.location.reload();
       }, 2000);
 
     } catch (error) {
