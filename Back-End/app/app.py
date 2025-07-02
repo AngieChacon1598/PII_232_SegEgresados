@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template, Response, send_file, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from config import SQLALCHEMY_DATABASE_URI
+from app.config import SQLALCHEMY_DATABASE_URI
 import json
 import re
 from marshmallow import Schema, fields, validate, ValidationError
