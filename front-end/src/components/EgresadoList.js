@@ -192,6 +192,10 @@ const EgresadoList = ({
           </div>
         </div>
 
+        {/* Botón de prueba para eliminar EG002 */}
+        <button onClick={() => handleDelete('EG002')} style={{margin: '10px', background: 'red', color: 'white', padding: '8px', borderRadius: '5px'}}>Probar eliminar EG002</button>
+        {/* Fin botón de prueba */}
+
         {loading ? (
           <p>Cargando egresados...</p>
         ) : (egresados.length === 0) ? (
