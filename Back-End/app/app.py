@@ -538,6 +538,10 @@ def create_egresado():
     if not validar_nombre_apellido(data['apellidos']):
         return jsonify({'message': 'Los apellidos contienen caracteres no válidos.'}), 400
 
+    # Asignar 'A' por defecto si no se envía 'estado'
+    if 'estado' not in data or not data['estado']:
+        data['estado'] = 'A'
+
     # Crear un nuevo egresado
     nuevo_egresado = Egresado(
         codigo=data['codigo'],
